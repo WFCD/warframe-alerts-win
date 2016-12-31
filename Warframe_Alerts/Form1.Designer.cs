@@ -34,20 +34,20 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.InvasionData = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonExit = new System.Windows.Forms.Button();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.Notify_Icon = new System.Windows.Forms.NotifyIcon(this.components);
             this.Menu_Strip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Menu_Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonSetting = new System.Windows.Forms.Button();
+            this.buttonSM = new System.Windows.Forms.Button();
             this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Faction = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Time_Left = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.buttonSM = new System.Windows.Forms.Button();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.AlertData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.InvasionData)).BeginInit();
             this.Menu_Strip.SuspendLayout();
@@ -97,27 +97,6 @@
             this.InvasionData.Name = "InvasionData";
             this.InvasionData.Size = new System.Drawing.Size(956, 225);
             this.InvasionData.TabIndex = 3;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.FillWeight = 197.1523F;
-            this.dataGridViewTextBoxColumn2.HeaderText = "Title";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Width = 600;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.FillWeight = 25.2336F;
-            this.dataGridViewTextBoxColumn3.HeaderText = "Type";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 77;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.FillWeight = 77.61415F;
-            this.dataGridViewTextBoxColumn4.HeaderText = "Start Time";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.Width = 236;
             // 
             // buttonExit
             // 
@@ -172,6 +151,16 @@
             this.buttonSetting.UseVisualStyleBackColor = true;
             this.buttonSetting.Click += new System.EventHandler(this.Setting_Click);
             // 
+            // buttonSM
+            // 
+            this.buttonSM.Location = new System.Drawing.Point(93, 511);
+            this.buttonSM.Name = "buttonSM";
+            this.buttonSM.Size = new System.Drawing.Size(133, 23);
+            this.buttonSM.TabIndex = 7;
+            this.buttonSM.Text = "Enable Start Minimized";
+            this.buttonSM.UseVisualStyleBackColor = true;
+            this.buttonSM.Click += new System.EventHandler(this.buttonSM_Click);
+            // 
             // Description
             // 
             this.Description.HeaderText = "Description";
@@ -183,28 +172,45 @@
             // 
             this.Title.HeaderText = "Title";
             this.Title.Name = "Title";
+            this.Title.ReadOnly = true;
             this.Title.Width = 400;
             // 
             // Faction
             // 
             this.Faction.HeaderText = "Faction";
             this.Faction.Name = "Faction";
+            this.Faction.ReadOnly = true;
             // 
             // Time_Left
             // 
             this.Time_Left.HeaderText = "Time Left";
             this.Time_Left.Name = "Time_Left";
+            this.Time_Left.ReadOnly = true;
             this.Time_Left.Width = 213;
             // 
-            // buttonSM
+            // dataGridViewTextBoxColumn2
             // 
-            this.buttonSM.Location = new System.Drawing.Point(93, 511);
-            this.buttonSM.Name = "buttonSM";
-            this.buttonSM.Size = new System.Drawing.Size(133, 23);
-            this.buttonSM.TabIndex = 7;
-            this.buttonSM.Text = "Enable Start Minimized";
-            this.buttonSM.UseVisualStyleBackColor = true;
-            this.buttonSM.Click += new System.EventHandler(this.buttonSM_Click);
+            this.dataGridViewTextBoxColumn2.FillWeight = 197.1523F;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Title";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Width = 600;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.FillWeight = 25.2336F;
+            this.dataGridViewTextBoxColumn3.HeaderText = "Type";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.Width = 77;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.FillWeight = 77.61415F;
+            this.dataGridViewTextBoxColumn4.HeaderText = "Start Time";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            this.dataGridViewTextBoxColumn4.Width = 236;
             // 
             // Main_Window
             // 
@@ -241,18 +247,18 @@
         private System.Windows.Forms.DataGridView InvasionData;
         private System.Windows.Forms.Button buttonExit;
         private System.Windows.Forms.Button buttonUpdate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.NotifyIcon Notify_Icon;
         private System.Windows.Forms.ContextMenuStrip Menu_Strip;
         private System.Windows.Forms.ToolStripMenuItem Menu_Exit;
         private System.Windows.Forms.Button buttonSetting;
+        private System.Windows.Forms.Button buttonSM;
         private System.Windows.Forms.DataGridViewTextBoxColumn Description;
         private System.Windows.Forms.DataGridViewTextBoxColumn Title;
         private System.Windows.Forms.DataGridViewTextBoxColumn Faction;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time_Left;
-        private System.Windows.Forms.Button buttonSM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
     }
 }
 

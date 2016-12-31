@@ -55,7 +55,7 @@ namespace Warframe_Alerts
             {
                 Value = ex.ToString();
                 string message = "Creating new config file";
-                string caption = "Config File Absent";
+                string caption = "Warframe Alerts";
                 MessageBoxButtons buttons = MessageBoxButtons.OK;
                 MessageBox.Show(message, caption, buttons);
                 File.WriteAllText("App.cfg", "<SM> 0 </SM>");
