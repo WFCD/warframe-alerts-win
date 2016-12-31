@@ -54,6 +54,10 @@ namespace Warframe_Alerts
             catch (System.Exception ex)
             {
                 Value = ex.ToString();
+                string message = "Creating new config file";
+                string caption = "Config File Absent";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                MessageBox.Show(message, caption, buttons);
                 File.WriteAllText("App.cfg", "<SM> 0 </SM>");
                 return;
             }
