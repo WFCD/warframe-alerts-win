@@ -109,9 +109,10 @@ namespace Warframe_Alerts
             {
                 string message = "Network not responding" + '\n';
                 message = message + Response;
-                string caption = "Update Failed";
-                MessageBoxButtons buttons = MessageBoxButtons.OK;
-                MessageBox.Show(message, caption, buttons);
+
+                Notify_Icon.BalloonTipText = message;
+                Notify_Icon.BalloonTipTitle = "Update Failed";
+                Notify_Icon.ShowBalloonTip(2000);
                 return;
             }
 
