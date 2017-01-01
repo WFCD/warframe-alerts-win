@@ -100,7 +100,7 @@
             // 
             // buttonExit
             // 
-            this.buttonExit.Location = new System.Drawing.Point(893, 511);
+            this.buttonExit.Location = new System.Drawing.Point(893, 510);
             this.buttonExit.Name = "buttonExit";
             this.buttonExit.Size = new System.Drawing.Size(75, 23);
             this.buttonExit.TabIndex = 4;
@@ -110,7 +110,7 @@
             // 
             // buttonUpdate
             // 
-            this.buttonUpdate.Location = new System.Drawing.Point(812, 511);
+            this.buttonUpdate.Location = new System.Drawing.Point(812, 510);
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(75, 23);
             this.buttonUpdate.TabIndex = 5;
@@ -143,7 +143,7 @@
             // 
             // buttonSetting
             // 
-            this.buttonSetting.Location = new System.Drawing.Point(12, 511);
+            this.buttonSetting.Location = new System.Drawing.Point(12, 510);
             this.buttonSetting.Name = "buttonSetting";
             this.buttonSetting.Size = new System.Drawing.Size(75, 23);
             this.buttonSetting.TabIndex = 6;
@@ -153,7 +153,7 @@
             // 
             // buttonSM
             // 
-            this.buttonSM.Location = new System.Drawing.Point(93, 511);
+            this.buttonSM.Location = new System.Drawing.Point(93, 510);
             this.buttonSM.Name = "buttonSM";
             this.buttonSM.Size = new System.Drawing.Size(133, 23);
             this.buttonSM.TabIndex = 7;
@@ -216,7 +216,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(980, 545);
+            this.ClientSize = new System.Drawing.Size(980, 541);
             this.Controls.Add(this.buttonSM);
             this.Controls.Add(this.buttonSetting);
             this.Controls.Add(this.buttonUpdate);
