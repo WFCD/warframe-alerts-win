@@ -167,8 +167,17 @@ namespace Warframe_Alerts
                 DateTime T_Now = DateTime.Now;
                 TimeSpan I_Span = T_Now.Subtract(S_Time);
 
+                string I_Time = "";
+
+                if (I_Span.Hours != 0)
+                {
+                    I_Time = I_Time + I_Span.Hours.ToString() + " Hours ";
+                }
+
+                I_Time = I_Time + I_Span.Minutes.ToString() + " Minutes Ago";
+
                 ID_List.Add(I_ID);
-                InvasionData.Rows.Add(Title, "Invasion", I_Span.Hours.ToString() + " Hours " + I_Span.Minutes.ToString() + " Minutes Ago");
+                InvasionData.Rows.Add(Title, "Invasion", I_Time);
                 //InvasionData.Rows.Add(Title, "Invasion", S_Time.ToString());
             }
 
@@ -181,8 +190,17 @@ namespace Warframe_Alerts
                 DateTime T_Now = DateTime.Now;
                 TimeSpan O_Span = T_Now.Subtract(S_Time);
 
+                string O_Time = "";
+
+                if (O_Span.Hours != 0)
+                {
+                    O_Time = O_Time + O_Span.Hours.ToString() + " Hours ";
+                }
+
+                O_Time = O_Time + O_Span.Minutes.ToString() + " Minutes Ago";
+
                 ID_List.Add(O_ID);
-                InvasionData.Rows.Add(Title, "Outbreak", O_Span.Hours.ToString() + " Hours " + O_Span.Minutes.ToString() + " Minutes Ago");
+                InvasionData.Rows.Add(Title, "Outbreak", O_Time);
             }
         }
 
