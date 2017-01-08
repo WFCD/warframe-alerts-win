@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Warframe_Alerts
 {
@@ -45,30 +46,26 @@ namespace Warframe_Alerts
 
         public void Apply_Settings()
         {
-            string Value = "";
+            if (!File.Exists("Config.xml"))
+            {
+                XDocument NewDoc = new XDocument(
+                    new XElement("body",
 
-            try
-            {
-                Value = File.ReadAllText("App.cfg");
-            }
-            catch (System.Exception ex)
-            {
-                Value = ex.ToString();
-                string message = "Creating new config file";
-                string caption = "Warframe Alerts";
-                MessageBoxButtons buttons = MessageBoxButtons.OK;
-                MessageBox.Show(message, caption, buttons);
-                File.WriteAllText("App.cfg", "<SM> 0 </SM>");
+                        new XElement("LoadMinimized", "0")
+
+
+                    )
+                );
+
+                NewDoc.Save("Config.xml");
                 return;
             }
 
-            if (Value.IndexOf('1') != -1)
+            XDocument Doc = XDocument.Load("Config.xml");
+
+            if (Doc.Element("body").Element("LoadMinimized").Value == "1")
             {
                 Start_Minimized = true;
-            }
-
-            if (Start_Minimized)
-            {
                 this.WindowState = FormWindowState.Minimized;
                 this.ShowInTaskbar = false;
                 buttonSM.Text = "Disable Start Minimized";
@@ -310,7 +307,10 @@ namespace Warframe_Alerts
                 MessageBox.Show(message, caption, buttons);
 
                 Start_Minimized = false;
-                File.WriteAllText("App.cfg", "<SM> 0 </SM>");
+
+                XDocument Doc = XDocument.Load("Config.xml");
+                Doc.Element("body").Element("LoadMinimized").Value = "0";
+                Doc.Save("Config.xml");
             }
             else
             {
@@ -320,7 +320,10 @@ namespace Warframe_Alerts
                 MessageBox.Show(message, caption, buttons);
 
                 Start_Minimized = true;
-                File.WriteAllText("App.cfg", "<SM> 1 </SM>");
+
+                XDocument Doc = XDocument.Load("Config.xml");
+                Doc.Element("body").Element("LoadMinimized").Value = "1";
+                Doc.Save("Config.xml");
             }
         }
     }
