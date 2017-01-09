@@ -46,8 +46,12 @@ namespace Warframe_Alerts
                 XDocument NewDoc = new XDocument(
                     new XElement("body",
 
-                        new XElement("LoadMinimized", "0")
-
+                        new XElement("LoadMinimized", "0"),
+                        new XElement("Resources", "1"),
+                        new XElement("Mods", "1"),
+                        new XElement("Credits", "1"),
+                        new XElement("Blueprints", "1"),
+                        new XElement("UpdateTimer", U_Interval.ToString())
 
                     )
                 );
@@ -65,13 +69,34 @@ namespace Warframe_Alerts
                 this.ShowInTaskbar = false;
                 buttonSM.Text = "Disable Start Minimized";
             }
+
+            if (Doc.Element("body").Element("Resources").Value == "0")
+            {
+                F_Resources = false;
+            }
+
+            if (Doc.Element("body").Element("Blueprints").Value == "0")
+            {
+                F_Blueprints = false;
+            }
+
+            if (Doc.Element("body").Element("Mods").Value == "0")
+            {
+                F_Mods = false;
+            }
+
+            if (Doc.Element("body").Element("Credits").Value == "0")
+            {
+                F_Credits = false;
+            }
+
+            string UInt = Doc.Element("body").Element("UpdateTimer").Value;
+
+            U_Interval = Convert.ToInt32(UInt);
         }
 
         private void Update_Click(object sender, EventArgs e)
         {
-            //Notify_Icon.BalloonTipText = "TEST MESSAGE";
-            //Notify_Icon.BalloonTipTitle = "TEST TITLE";
-            //Notify_Icon.ShowBalloonTip(1000);
             WF_Update();
         }
 
@@ -84,6 +109,51 @@ namespace Warframe_Alerts
         {
             Secondary_Form SF = new Secondary_Form(this,F_Resources,F_Mods,F_Credits,F_Blueprints);
             SF.ShowDialog();
+        }
+
+        public void Update_Settings_XML()
+        {
+            XDocument Doc = XDocument.Load("Config.xml");
+            
+            if (F_Resources)
+            {
+                Doc.Element("body").Element("Resources").Value = "1";
+            }
+            else
+            {
+                Doc.Element("body").Element("Resources").Value = "0";
+            }
+
+            if (F_Credits)
+            {
+                Doc.Element("body").Element("Credits").Value = "1";
+            }
+            else
+            {
+                Doc.Element("body").Element("Credits").Value = "0";
+            }
+
+            if (F_Mods)
+            {
+                Doc.Element("body").Element("Mods").Value = "1";
+            }
+            else
+            {
+                Doc.Element("body").Element("Mods").Value = "0";
+            }
+
+            if (F_Blueprints)
+            {
+                Doc.Element("body").Element("Blueprints").Value = "1";
+            }
+            else
+            {
+                Doc.Element("body").Element("Blueprints").Value = "0";
+            }
+
+            Doc.Element("body").Element("UpdateTimer").Value = U_Interval.ToString();
+
+            Doc.Save("Config.xml");
         }
 
         public void WF_Update()

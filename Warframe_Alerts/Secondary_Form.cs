@@ -71,6 +71,10 @@ namespace Warframe_Alerts
             }
 
             Main_Form.Update_Interval = Input_To_Int * 60 * 1000;
+
+            Main_Form.Update_Settings_XML();
+            Main_Form.WF_Update();
+
             this.Close();
         }
 
