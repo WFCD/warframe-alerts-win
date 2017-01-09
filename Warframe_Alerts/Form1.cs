@@ -17,20 +17,15 @@ namespace Warframe_Alerts
     {
         List<string> ID_List = new List<string>();
 
-        public int Update_Interval
-        {
-            get {
-                return U_Interval;
-            }
-            set {
-                U_Interval = value;
-                Update_Timer.Interval = U_Interval;
-            }
-        }
-
-        public int U_Interval = 1 * 60 * 1000;
-        System.Windows.Forms.Timer Update_Timer = new System.Windows.Forms.Timer();
+        int U_Interval = 1 * 60 * 1000;
         bool Start_Minimized = false;
+
+        bool F_Mods = true;
+        bool F_Resources = true;
+        bool F_Credits = true;
+        bool F_Blueprints = true;
+
+        System.Windows.Forms.Timer Update_Timer = new System.Windows.Forms.Timer();
         bool Phase_Shift = false;
 
         public Main_Window()
@@ -87,7 +82,7 @@ namespace Warframe_Alerts
 
         private void Setting_Click(object sender, EventArgs e)
         {
-            Secondary_Form SF = new Secondary_Form(this);
+            Secondary_Form SF = new Secondary_Form(this,F_Resources,F_Mods,F_Credits,F_Blueprints);
             SF.ShowDialog();
         }
 
@@ -324,6 +319,67 @@ namespace Warframe_Alerts
                 XDocument Doc = XDocument.Load("Config.xml");
                 Doc.Element("body").Element("LoadMinimized").Value = "1";
                 Doc.Save("Config.xml");
+            }
+        }
+
+        public int Update_Interval
+        {
+            get
+            {
+                return U_Interval;
+            }
+            set
+            {
+                U_Interval = value;
+                Update_Timer.Interval = U_Interval;
+            }
+        }
+
+        public bool Resource_Filter
+        {
+            get
+            {
+                return F_Resources;
+            }
+            set
+            {
+                F_Resources = value;
+            }
+        }
+
+        public bool Credit_Filter
+        {
+            get
+            {
+                return F_Credits;
+            }
+            set
+            {
+                F_Credits = value;
+            }
+        }
+
+        public bool Mod_Filter
+        {
+            get
+            {
+                return F_Mods;
+            }
+            set
+            {
+                F_Mods = value;
+            }
+        }
+
+        public bool Blueprint_Filter
+        {
+            get
+            {
+                return F_Blueprints;
+            }
+            set
+            {
+                F_Blueprints = value;
             }
         }
     }
