@@ -126,28 +126,32 @@ namespace Warframe_Alerts
                 string Faction = Alerts[i].Faction;
                 string A_ID = Alerts[i].ID;
 
-                TimeSpan A_Span = E_Time.Subtract(DateTime.Now);
-                string A_Left = "";
+                if (Filter_Alerts(Title))
+                {
+                    TimeSpan A_Span = E_Time.Subtract(DateTime.Now);
+                    string A_Left = "";
+
+                    if (A_Span.Days != 0)
+                    {
+                        A_Left = A_Left + A_Span.Days.ToString() + " Days ";
+                    }
+
+                    if (A_Span.Hours != 0)
+                    {
+                        A_Left = A_Left + A_Span.Hours.ToString() + " Hours ";
+                    }
+
+                    if (A_Span.Minutes != 0)
+                    {
+                        A_Left = A_Left + A_Span.Minutes.ToString() + " Minutes ";
+                    }
+
+                    A_Left = A_Left + A_Span.Seconds.ToString() + " Seconds Left";
+
+                    ID_List.Add(A_ID);
+                    AlertData.Rows.Add(Description, Title, Faction, A_Left);
+                }
                 
-                if (A_Span.Days != 0)
-                {
-                    A_Left = A_Left + A_Span.Days.ToString() + " Days ";
-                }
-
-                if (A_Span.Hours != 0)
-                {
-                    A_Left = A_Left + A_Span.Hours.ToString() + " Hours ";
-                }
-
-                if (A_Span.Minutes != 0)
-                {
-                    A_Left = A_Left + A_Span.Minutes.ToString() + " Minutes ";
-                }
-
-                A_Left = A_Left + A_Span.Seconds.ToString() + " Seconds Left";
-
-                ID_List.Add(A_ID);
-                AlertData.Rows.Add(Description, Title, Faction, A_Left);
                 //AlertData.Rows.Add(Description, Title, Faction, Time_Left + " min left");
             }
 
@@ -320,6 +324,60 @@ namespace Warframe_Alerts
                 Doc.Element("body").Element("LoadMinimized").Value = "1";
                 Doc.Save("Config.xml");
             }
+        }
+
+        private bool Filter_Alerts(string Title)
+        {
+            bool Flag = true;
+
+            if (!F_Blueprints)
+            {
+                if (Title.IndexOf("(Blueprint)") != -1)
+                {
+                    Flag = false;
+                }
+            }
+
+            if (!F_Credits)
+            {
+                int DashCount = 0;
+
+                for (int i = 0; i < Title.Length; i++)
+                {
+                    if (Title[i] == '-')
+                    {
+                        DashCount++;
+                    }
+                }
+
+                if (DashCount == 2)
+                {
+                    string[] Arr = Title.Split('-');
+
+                    if (Arr[0].IndexOf("cr") != -1)
+                    {
+                        Flag = false;
+                    }
+                }
+            }
+
+            if (!F_Mods)
+            {
+                if (Title.IndexOf("(Mod)") != -1)
+                {
+                    Flag = false;
+                }
+            }
+
+            if (!F_Resources)
+            {
+                if (Title.IndexOf("Resource") != -1 || Title.IndexOf("ENDO") != -1)
+                {
+                    Flag = false;
+                }
+            }
+
+            return Flag;
         }
 
         public int Update_Interval
