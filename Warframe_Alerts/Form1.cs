@@ -287,7 +287,7 @@ namespace Warframe_Alerts
                     }
                 }
 
-                if (!Found)
+                if (!Found && Filter_Alerts(A[i].Title))
                 {
                     Notification_Message = Notification_Message + A[i].Title + '\n';
                 }
@@ -305,7 +305,7 @@ namespace Warframe_Alerts
                     }
                 }
 
-                if (!Found)
+                if (!Found && Filter_Alerts(I[i].Title))
                 {
                     Notification_Message = Notification_Message + I[i].Title + '\n';
                 }
@@ -323,7 +323,7 @@ namespace Warframe_Alerts
                     }
                 }
 
-                if (!Found)
+                if (!Found && Filter_Alerts(O[i].Title))
                 {
                     Notification_Message = Notification_Message + O[i].Title + '\n';
                 }
