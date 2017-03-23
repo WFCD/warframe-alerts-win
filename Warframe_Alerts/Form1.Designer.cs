@@ -31,9 +31,16 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main_Window));
             this.AlertData = new System.Windows.Forms.DataGridView();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Faction = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Time_Left = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.InvasionData = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonExit = new System.Windows.Forms.Button();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.Notify_Icon = new System.Windows.Forms.NotifyIcon(this.components);
@@ -41,13 +48,7 @@
             this.Menu_Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonSetting = new System.Windows.Forms.Button();
             this.buttonSM = new System.Windows.Forms.Button();
-            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Faction = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Time_Left = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BtnLog = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.AlertData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.InvasionData)).BeginInit();
             this.Menu_Strip.SuspendLayout();
@@ -66,6 +67,33 @@
             this.AlertData.Name = "AlertData";
             this.AlertData.Size = new System.Drawing.Size(956, 225);
             this.AlertData.TabIndex = 0;
+            // 
+            // Description
+            // 
+            this.Description.HeaderText = "Description";
+            this.Description.Name = "Description";
+            this.Description.ReadOnly = true;
+            this.Description.Width = 200;
+            // 
+            // Title
+            // 
+            this.Title.HeaderText = "Title";
+            this.Title.Name = "Title";
+            this.Title.ReadOnly = true;
+            this.Title.Width = 400;
+            // 
+            // Faction
+            // 
+            this.Faction.HeaderText = "Faction";
+            this.Faction.Name = "Faction";
+            this.Faction.ReadOnly = true;
+            // 
+            // Time_Left
+            // 
+            this.Time_Left.HeaderText = "Time Left";
+            this.Time_Left.Name = "Time_Left";
+            this.Time_Left.ReadOnly = true;
+            this.Time_Left.Width = 213;
             // 
             // label1
             // 
@@ -97,6 +125,30 @@
             this.InvasionData.Name = "InvasionData";
             this.InvasionData.Size = new System.Drawing.Size(956, 225);
             this.InvasionData.TabIndex = 3;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.FillWeight = 197.1523F;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Title";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Width = 600;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.FillWeight = 25.2336F;
+            this.dataGridViewTextBoxColumn3.HeaderText = "Type";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.Width = 77;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.FillWeight = 77.61415F;
+            this.dataGridViewTextBoxColumn4.HeaderText = "Start Time";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            this.dataGridViewTextBoxColumn4.Width = 236;
             // 
             // buttonExit
             // 
@@ -161,62 +213,22 @@
             this.buttonSM.UseVisualStyleBackColor = true;
             this.buttonSM.Click += new System.EventHandler(this.buttonSM_Click);
             // 
-            // Description
+            // BtnLog
             // 
-            this.Description.HeaderText = "Description";
-            this.Description.Name = "Description";
-            this.Description.ReadOnly = true;
-            this.Description.Width = 200;
-            // 
-            // Title
-            // 
-            this.Title.HeaderText = "Title";
-            this.Title.Name = "Title";
-            this.Title.ReadOnly = true;
-            this.Title.Width = 400;
-            // 
-            // Faction
-            // 
-            this.Faction.HeaderText = "Faction";
-            this.Faction.Name = "Faction";
-            this.Faction.ReadOnly = true;
-            // 
-            // Time_Left
-            // 
-            this.Time_Left.HeaderText = "Time Left";
-            this.Time_Left.Name = "Time_Left";
-            this.Time_Left.ReadOnly = true;
-            this.Time_Left.Width = 213;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.FillWeight = 197.1523F;
-            this.dataGridViewTextBoxColumn2.HeaderText = "Title";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 600;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.FillWeight = 25.2336F;
-            this.dataGridViewTextBoxColumn3.HeaderText = "Type";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Width = 77;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.FillWeight = 77.61415F;
-            this.dataGridViewTextBoxColumn4.HeaderText = "Start Time";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            this.dataGridViewTextBoxColumn4.Width = 236;
+            this.BtnLog.Location = new System.Drawing.Point(233, 509);
+            this.BtnLog.Name = "BtnLog";
+            this.BtnLog.Size = new System.Drawing.Size(75, 23);
+            this.BtnLog.TabIndex = 8;
+            this.BtnLog.Text = "Enable Log";
+            this.BtnLog.UseVisualStyleBackColor = true;
+            this.BtnLog.Click += new System.EventHandler(this.BtnLog_Click);
             // 
             // Main_Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(980, 541);
+            this.Controls.Add(this.BtnLog);
             this.Controls.Add(this.buttonSM);
             this.Controls.Add(this.buttonSetting);
             this.Controls.Add(this.buttonUpdate);
@@ -259,6 +271,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.Button BtnLog;
     }
 }
 

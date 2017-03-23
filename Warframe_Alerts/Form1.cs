@@ -18,7 +18,8 @@ namespace Warframe_Alerts
         List<string> ID_List = new List<string>();
 
         int U_Interval = 1 * 60 * 1000;
-        bool Start_Minimized = false;
+        public bool StartMinimized = false;
+        private bool Enable_Log = false;
 
         bool F_Mods = true;
         bool F_Resources = true;
@@ -51,6 +52,7 @@ namespace Warframe_Alerts
                         new XElement("Mods", "1"),
                         new XElement("Credits", "1"),
                         new XElement("Blueprints", "1"),
+                        new XElement("Log", "0"),
                         new XElement("UpdateTimer", U_Interval.ToString())
 
                     )
@@ -64,10 +66,16 @@ namespace Warframe_Alerts
 
             if (Doc.Element("body").Element("LoadMinimized").Value == "1")
             {
-                Start_Minimized = true;
+                StartMinimized = true;
                 this.WindowState = FormWindowState.Minimized;
                 this.ShowInTaskbar = false;
                 buttonSM.Text = "Disable Start Minimized";
+            }
+
+            if (Doc.Element("body").Element("Log").Value == "1")
+            {
+                Enable_Log = true;
+                BtnLog.Text = "Disable Log";
             }
 
             if (Doc.Element("body").Element("Resources").Value == "0")
@@ -287,7 +295,10 @@ namespace Warframe_Alerts
                     }
                 }
 
-                if (!Found && Filter_Alerts(A[i].Title))
+                if (Found) continue;
+                File.AppendAllText("log.txt", A[i].ID + '\t' + A[i].Title + Environment.NewLine);
+
+                if (Filter_Alerts(A[i].Title))
                 {
                     Notification_Message = Notification_Message + A[i].Title + '\n';
                 }
@@ -366,16 +377,47 @@ namespace Warframe_Alerts
             }
         }
 
+        private void BtnLog_Click(object sender, EventArgs e)
+        {
+            if (Enable_Log)
+            {
+                string message = "Logging has been disabled";
+                string caption = "Success";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                MessageBox.Show(message, caption, buttons);
+
+                Enable_Log = false;
+
+                XDocument Doc = XDocument.Load("Config.xml");
+                Doc.Element("body").Element("Log").Value = "0";
+                Doc.Save("Config.xml");
+            }
+            else
+            {
+                string message = "Logging has been enabled";
+                string caption = "Success";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                MessageBox.Show(message, caption, buttons);
+
+                Enable_Log = true;
+
+                XDocument Doc = XDocument.Load("Config.xml");
+                Doc.Element("body").Element("Log").Value = "1";
+                Doc.Save("Config.xml");
+            }
+
+        }
+
         private void buttonSM_Click(object sender, EventArgs e)
         {
-            if (Start_Minimized)
+            if (StartMinimized)
             {
                 string message = "Start minimized has been disabled";
                 string caption = "Success";
                 MessageBoxButtons buttons = MessageBoxButtons.OK;
                 MessageBox.Show(message, caption, buttons);
 
-                Start_Minimized = false;
+                StartMinimized = false;
 
                 XDocument Doc = XDocument.Load("Config.xml");
                 Doc.Element("body").Element("LoadMinimized").Value = "0";
@@ -388,7 +430,7 @@ namespace Warframe_Alerts
                 MessageBoxButtons buttons = MessageBoxButtons.OK;
                 MessageBox.Show(message, caption, buttons);
 
-                Start_Minimized = true;
+                StartMinimized = true;
 
                 XDocument Doc = XDocument.Load("Config.xml");
                 Doc.Element("body").Element("LoadMinimized").Value = "1";
