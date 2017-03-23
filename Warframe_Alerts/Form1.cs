@@ -235,6 +235,46 @@ namespace Warframe_Alerts
             }
         }
 
+        public void Log_Alert(string id, string disc)
+        {
+            var flag = true;
+
+            if (File.Exists("AlertLog.txt"))
+            {
+                var text = File.ReadAllText("AlertLog.txt");
+
+                if (text.Contains(id))
+                {
+                    flag = false;
+                }
+            }
+
+            if (flag)
+            {
+                File.AppendAllText("AlertLog.txt", id + '\t' + disc + Environment.NewLine);
+            }
+        }
+
+        public void Log_Invasion(string id, string disc)
+        {
+            var flag = true;
+
+            if (File.Exists("InvasionLog.txt"))
+            {
+                var text = File.ReadAllText("InvasionLog.txt");
+
+                if (text.Contains(id))
+                {
+                    flag = false;
+                }
+            }
+
+            if (flag)
+            {
+                File.AppendAllText("InvasionLog.txt", id + '\t' + disc + Environment.NewLine);
+            }
+        }
+
         public void Notify_Alerts_And_Invasions(ref List<Alert> a, ref List<Invasion> I, ref List<Outbreak> o)
         {
             var notificationMessage = "";
@@ -252,7 +292,7 @@ namespace Warframe_Alerts
                 }
 
                 if (found) continue;
-                File.AppendAllText("AlertLog.txt", a[i].ID + '\t' + a[i].Title + Environment.NewLine);
+                Log_Alert(a[i].ID, a[i].Title);
 
                 if (Filter_Alerts(a[i].Title))
                 {
@@ -273,7 +313,7 @@ namespace Warframe_Alerts
                 }
 
                 if (found) continue;
-                File.AppendAllText("InvasionLog.txt", I[i].ID + '\t' + I[i].Title + Environment.NewLine);
+                Log_Invasion(I[i].ID, I[i].Title);
 
                 if (Filter_Alerts(I[i].Title))
                 {
@@ -294,7 +334,7 @@ namespace Warframe_Alerts
                 }
 
                 if (found) continue;
-                File.AppendAllText("InvasionLog.txt", o[i].ID + '\t' + o[i].Title + Environment.NewLine);
+                Log_Invasion(o[i].ID, o[i].Title);
 
                 if (Filter_Alerts(o[i].Title))
                 {
