@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Warframe_Alerts
@@ -40,7 +37,7 @@ namespace Warframe_Alerts
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main_Window());
+            Application.Run(new MainWindow());
         }
     }
 }

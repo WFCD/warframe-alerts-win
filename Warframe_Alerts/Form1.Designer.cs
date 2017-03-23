@@ -1,11 +1,14 @@
-﻿namespace Warframe_Alerts
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace Warframe_Alerts
 {
-    partial class Main_Window
+    partial class MainWindow
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -29,7 +32,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main_Window));
+            var resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.AlertData = new System.Windows.Forms.DataGridView();
             this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -240,7 +243,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "Main_Window";
+            this.Name = "MainWindow";
             this.Text = "Warframe Alerts";
             this.Resize += new System.EventHandler(this.Resize_Action);
             ((System.ComponentModel.ISupportInitialize)(this.AlertData)).EndInit();
@@ -253,25 +256,25 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView AlertData;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridView InvasionData;
-        private System.Windows.Forms.Button buttonExit;
-        private System.Windows.Forms.Button buttonUpdate;
-        private System.Windows.Forms.NotifyIcon Notify_Icon;
-        private System.Windows.Forms.ContextMenuStrip Menu_Strip;
-        private System.Windows.Forms.ToolStripMenuItem Menu_Exit;
-        private System.Windows.Forms.Button buttonSetting;
-        private System.Windows.Forms.Button buttonSM;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Description;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Title;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Faction;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Time_Left;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.Button BtnLog;
+        private DataGridView AlertData;
+        private Label label1;
+        private Label label2;
+        private DataGridView InvasionData;
+        private Button buttonExit;
+        private Button buttonUpdate;
+        private NotifyIcon Notify_Icon;
+        private ContextMenuStrip Menu_Strip;
+        private ToolStripMenuItem Menu_Exit;
+        private Button buttonSetting;
+        private Button buttonSM;
+        private DataGridViewTextBoxColumn Description;
+        private DataGridViewTextBoxColumn Title;
+        private DataGridViewTextBoxColumn Faction;
+        private DataGridViewTextBoxColumn Time_Left;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private Button BtnLog;
     }
 }
 

@@ -110,7 +110,7 @@
     <Compile Include="Secondary_Form.Designer.cs">
       <DependentUpon>Secondary_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Warframe_Handler.cs" />
+    <Compile Include="WarframeHandler.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

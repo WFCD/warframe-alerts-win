@@ -1,151 +1,116 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Warframe_Alerts
 {
-    public partial class Secondary_Form : Form
+    public partial class SecondaryForm : Form
     {
-        private Main_Window Main_Form = null;
-        bool Phase_Shift = false;
+        private readonly MainWindow _mainForm;
 
-        bool Initial_R;
-        bool Initial_M;
-        bool Initial_B;
-        bool Initial_C;
+        private readonly bool _phaseShift;
+        private readonly bool _initialR;
+        private readonly bool _initialM;
+        private readonly bool _initialB;
+        private readonly bool _initialC;
 
-        public Secondary_Form(Main_Window MW, bool ResourceFlag, bool ModFlag, bool CreditFlag, bool BlueprintFlag)
+        public SecondaryForm(MainWindow mw, bool resourceFlag, bool modFlag, bool creditFlag, bool blueprintFlag)
         {
-            Main_Form = MW;
+            _mainForm = mw;
             InitializeComponent();
-            textBoxInterval.Text = (Main_Form.Update_Interval / (60 * 1000)).ToString();
+            textBoxInterval.Text = (_mainForm.UpdateInterval / (60 * 1000)).ToString();
 
-            Initial_R = ResourceFlag;
-            Initial_M = ModFlag;
-            Initial_C = CreditFlag;
-            Initial_B = BlueprintFlag;
+            _initialR = resourceFlag;
+            _initialM = modFlag;
+            _initialC = creditFlag;
+            _initialB = blueprintFlag;
 
-            Phase_Shift = true;
+            _phaseShift = true;
 
-            if (ResourceFlag)
+            if (resourceFlag)
             {
                 checkBoxResource.Checked = true;
             }
 
-            if (ModFlag)
+            if (modFlag)
             {
                 checkBoxMod.Checked = true;
             }
 
-            if (CreditFlag)
+            if (creditFlag)
             {
                 checkBoxCredit.Checked = true;
             }
 
-            if (BlueprintFlag)
+            if (blueprintFlag)
             {
                 checkBoxBlueprint.Checked = true;
             }
 
-            Phase_Shift = false;
+            _phaseShift = false;
         }
 
         private void buttonSet_Click(object sender, EventArgs e)
         {
-            string Input = textBoxInterval.Text;
+            var input = textBoxInterval.Text;
 
-            int Input_To_Int;
+            int inputToInt;
 
-            if (!Int32.TryParse(Input, out Input_To_Int))
+            if (!Int32.TryParse(input, out inputToInt))
             {
-                string message = "Please insert a valid input";
-                string caption = "Invalid Input";
-                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                var message = "Please insert a valid input";
+                var caption = "Invalid Input";
+                var buttons = MessageBoxButtons.OK;
                 MessageBox.Show(message, caption, buttons);
             }
 
-            Main_Form.Update_Interval = Input_To_Int * 60 * 1000;
+            _mainForm.UpdateInterval = inputToInt * 60 * 1000;
 
-            Main_Form.Update_Settings_XML();
-            Main_Form.WF_Update();
+            _mainForm.Update_Settings_XML();
+            _mainForm.WF_Update();
 
-            this.Close();
+            Close();
         }
 
         private void CheckBoxResource_Changed(object sender, EventArgs e)
         {
-            if (!Phase_Shift)
+            if (!_phaseShift)
             {
-                if (checkBoxResource.Checked)
-                {
-                    Main_Form.Resource_Filter = true;
-                }
-                else
-                {
-                    Main_Form.Resource_Filter = false;
-                }
+                _mainForm.ResourceFilter = checkBoxResource.Checked;
             }
         }
 
         private void CheckBoxCredit_Changed(object sender, EventArgs e)
         {
-            if (!Phase_Shift)
+            if (!_phaseShift)
             {
-                if (checkBoxCredit.Checked)
-                {
-                    Main_Form.Credit_Filter = true;
-                }
-                else
-                {
-                    Main_Form.Credit_Filter = false;
-                }
+                _mainForm.CreditFilter = checkBoxCredit.Checked;
             }
         }
 
         private void CheckBoxMod_Changed(object sender, EventArgs e)
         {
-            if (!Phase_Shift)
+            if (!_phaseShift)
             {
-                if (checkBoxMod.Checked)
-                {
-                    Main_Form.Mod_Filter = true;
-                }
-                else
-                {
-                    Main_Form.Mod_Filter = false;
-                }
+                _mainForm.ModFilter = checkBoxMod.Checked;
             }
         }
 
         private void CheckBoxBlueprint_Changed(object sender, EventArgs e)
         {
-            if (!Phase_Shift)
+            if (!_phaseShift)
             {
-                if (checkBoxBlueprint.Checked)
-                {
-                    Main_Form.Blueprint_Filter = true;
-                }
-                else
-                {
-                    Main_Form.Blueprint_Filter = false;
-                }
+                _mainForm.BlueprintFilter = checkBoxBlueprint.Checked;
             }
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            Main_Form.Blueprint_Filter = Initial_B;
-            Main_Form.Resource_Filter = Initial_R;
-            Main_Form.Credit_Filter = Initial_C;
-            Main_Form.Mod_Filter = Initial_M;
+            _mainForm.BlueprintFilter = _initialB;
+            _mainForm.ResourceFilter = _initialR;
+            _mainForm.CreditFilter = _initialC;
+            _mainForm.ModFilter = _initialM;
 
-            this.Close();
+            Close();
         }
     }
 }

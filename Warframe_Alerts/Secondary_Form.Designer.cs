@@ -1,11 +1,14 @@
-﻿namespace Warframe_Alerts
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace Warframe_Alerts
 {
-    partial class Secondary_Form
+    partial class SecondaryForm
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -28,7 +31,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Secondary_Form));
+            var resources = new System.ComponentModel.ComponentResourceManager(typeof(SecondaryForm));
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxInterval = new System.Windows.Forms.TextBox();
             this.buttonSet = new System.Windows.Forms.Button();
@@ -148,7 +151,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Secondary_Form";
+            this.Name = "SecondaryForm";
             this.Text = "Settings";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -157,14 +160,14 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBoxInterval;
-        private System.Windows.Forms.Button buttonSet;
-        private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.Label FilterLabel;
-        private System.Windows.Forms.CheckBox checkBoxMod;
-        private System.Windows.Forms.CheckBox checkBoxBlueprint;
-        private System.Windows.Forms.CheckBox checkBoxResource;
-        private System.Windows.Forms.CheckBox checkBoxCredit;
+        private Label label1;
+        private TextBox textBoxInterval;
+        private Button buttonSet;
+        private Button buttonCancel;
+        private Label FilterLabel;
+        private CheckBox checkBoxMod;
+        private CheckBox checkBoxBlueprint;
+        private CheckBox checkBoxResource;
+        private CheckBox checkBoxCredit;
     }
 }
