@@ -57,10 +57,10 @@ namespace Warframe_Alerts
             if (doc.Element("body").Element("LoadMinimized").Value == "1")
             {
                 _startMinimized = true;
-                WindowState = FormWindowState.Minimized;
-                ShowInTaskbar = false;
                 buttonSM.Text = @"Disable Start Minimized";
                 FormBorderStyle = FormBorderStyle.SizableToolWindow;
+                WindowState = FormWindowState.Minimized;
+                ShowInTaskbar = false;
             }
 
             if (doc.Element("body").Element("Log").Value == "1")
@@ -358,6 +358,7 @@ namespace Warframe_Alerts
         {
             if (WindowState != FormWindowState.Minimized || _phaseShift) return;
             Hide();
+            Opacity = 0;
             Notify_Icon.BalloonTipText = @"Warframe_Alerts is running in background";
             Notify_Icon.BalloonTipTitle = @"Update";
             if (_startMinimized) return;
@@ -370,6 +371,7 @@ namespace Warframe_Alerts
             FormBorderStyle = FormBorderStyle.FixedSingle;
             _phaseShift = true;
             ShowInTaskbar = true;
+            Opacity = 100;
             Show();
             WindowState = FormWindowState.Normal;
             BringToFront();
