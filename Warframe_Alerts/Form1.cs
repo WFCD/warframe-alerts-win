@@ -4,11 +4,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using MaterialSkin;
+using MaterialSkin.Controls;
+using System.Drawing;
 
 namespace Warframe_Alerts
 {
     [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-    public partial class MainWindow : Form
+    public partial class MainWindow : MaterialForm
     {
         private readonly List<string> _idList = new List<string>();
 
@@ -22,12 +25,34 @@ namespace Warframe_Alerts
         public MainWindow()
         {
             InitializeComponent();
+
+            var skinManager = MaterialSkinManager.Instance;
+            skinManager.AddFormToManage(this);
+            skinManager.Theme = MaterialSkinManager.Themes.DARK;
+            //skinManager.FORM_PADDING = 0;
+            FormBorderStyle = FormBorderStyle.None;
+            MaximumSize = new Size(1020, 530);
+            MinimumSize = new Size(1020, 530);
+            skinManager.ColorScheme = new ColorScheme(Primary.Teal800, Primary.Teal900, Primary.Teal500, Accent.Teal200, TextShade.WHITE);
+
             Apply_Settings();
             WF_Update();
 
             _updateTimer.Interval = _uInterval;
             _updateTimer.Tick += Update_Click;
             _updateTimer.Start();
+        }
+
+        public sealed override Size MinimumSize
+        {
+            get => base.MinimumSize;
+            set => base.MinimumSize = value;
+        }
+
+        public sealed override Size MaximumSize
+        {
+            get => base.MaximumSize;
+            set => base.MaximumSize = value;
         }
 
         public void Apply_Settings()
@@ -57,8 +82,9 @@ namespace Warframe_Alerts
             if (doc.Element("body").Element("LoadMinimized").Value == "1")
             {
                 _startMinimized = true;
-                buttonSM.Text = @"Disable Start Minimized";
                 FormBorderStyle = FormBorderStyle.SizableToolWindow;
+                //MBtnStartM.Text = @"Disable Start Minimized";
+                CBStartM.Checked = true;
                 WindowState = FormWindowState.Minimized;
                 ShowInTaskbar = false;
             }
@@ -66,7 +92,8 @@ namespace Warframe_Alerts
             if (doc.Element("body").Element("Log").Value == "1")
             {
                 _enableLog = true;
-                BtnLog.Text = @"Disable Log";
+                //MBtnLog.Text = @"Disable Log";
+                CBLog.Checked = true;
             }
 
             if (doc.Element("body").Element("Resources").Value == "0")
@@ -153,15 +180,24 @@ namespace Warframe_Alerts
 
             Notify_Alerts_And_Invasions(ref alerts, ref invasions, ref outbreaks);
 
-            AlertData.Rows.Clear();
-            InvasionData.Rows.Clear();
-            _idList.Clear();
+            AlertData.Items.Clear();
+            InvasionData.Items.Clear();
+            _idList.Clear();   
 
             for (var i = 0; i < alerts.Count; i++)
             {
                 var eTime = Convert.ToDateTime(alerts[i].Expiry_Date);
 
                 var title = alerts[i].Title;
+                var titleSp = title.Split('-');
+
+                title = titleSp[0];
+
+                for (var j = 1; j < titleSp.Length - 1; j++)
+                {
+                    title = title + "-" + titleSp[j];
+                }
+
                 var description = alerts[i].Description;
                 var faction = alerts[i].Faction;
                 var aId = alerts[i].ID;
@@ -188,7 +224,9 @@ namespace Warframe_Alerts
                 aLeft = aLeft + aSpan.Seconds + " Seconds Left";
 
                 _idList.Add(aId);
-                AlertData.Rows.Add(description, title, faction, aLeft);
+                string[] row = {description, title, faction, aLeft};
+                var listViewItem = new ListViewItem(row);
+                AlertData.Items.Add(listViewItem);
             }
 
             for (var i = 0; i < invasions.Count; i++)
@@ -210,7 +248,9 @@ namespace Warframe_Alerts
                 time = time + span.Minutes + " Minutes Ago";
 
                 _idList.Add(invId);
-                InvasionData.Rows.Add(title, "Invasion", time);
+                string[] row = {title, "Invasion", time};
+                var listViewItem = new ListViewItem(row);
+                InvasionData.Items.Add(listViewItem);
             }
 
             for (var i = 0; i < outbreaks.Count; i++)
@@ -232,8 +272,15 @@ namespace Warframe_Alerts
                 oTime = oTime + oSpan.Minutes + " Minutes Ago";
 
                 _idList.Add(oId);
-                InvasionData.Rows.Add(title, "Outbreak", oTime);
+                string[] row = {title, "Outbreak", oTime};
+                var listViewItem = new ListViewItem(row);
+                InvasionData.Items.Add(listViewItem);
             }
+
+            AlertData.Scrollable = AlertData.Items.Count != 3;
+            InvasionData.Scrollable = InvasionData.Items.Count != 3;
+            InvasionData.Columns[0].Width = InvasionData.Items.Count > 3 ? 627 : 644;
+            AlertData.Columns[3].Width = AlertData.Items.Count > 3 ? 235 : 252;
         }
 
         public void Log_Alert(string id, string disc)
@@ -293,7 +340,7 @@ namespace Warframe_Alerts
                 }
 
                 if (found) continue;
-                Log_Alert(a[i].ID, a[i].Title);
+                if (_enableLog) Log_Alert(a[i].ID, a[i].Title);
 
                 if (Filter_Alerts(a[i].Title))
                 {
@@ -314,7 +361,7 @@ namespace Warframe_Alerts
                 }
 
                 if (found) continue;
-                Log_Invasion(I[i].ID, I[i].Title);
+                if (_enableLog) Log_Invasion(I[i].ID, I[i].Title);
 
                 if (Filter_Alerts(I[i].Title))
                 {
@@ -335,7 +382,7 @@ namespace Warframe_Alerts
                 }
 
                 if (found) continue;
-                Log_Invasion(o[i].ID, o[i].Title);
+                if (_enableLog) Log_Invasion(o[i].ID, o[i].Title);
 
                 if (Filter_Alerts(o[i].Title))
                 {
@@ -368,70 +415,14 @@ namespace Warframe_Alerts
         private void Notification_Icon_Double_Click(object sender, EventArgs e)
         {
             if (WindowState != FormWindowState.Minimized) return;
-            FormBorderStyle = FormBorderStyle.FixedSingle;
             _phaseShift = true;
             ShowInTaskbar = true;
             Opacity = 100;
             Show();
             WindowState = FormWindowState.Normal;
+            FormBorderStyle = FormBorderStyle.None;
             BringToFront();
             _phaseShift = false;
-        }
-
-        private void BtnLog_Click(object sender, EventArgs e)
-        {
-            var message = "Logging has been disabled";
-            var caption = "Success";
-            const MessageBoxButtons buttons = MessageBoxButtons.OK;
-
-            if (_enableLog)
-            {
-                MessageBox.Show(message, caption, buttons);
-
-                _enableLog = false;
-
-                var doc = XDocument.Load("Config.xml");
-                doc.Element("body").Element("Log").Value = "0";
-                doc.Save("Config.xml");
-            }
-            else
-            {
-                message = "Logging has been enabled";
-                MessageBox.Show(message, caption, buttons);
-
-                _enableLog = true;
-
-                var doc = XDocument.Load("Config.xml");
-                doc.Element("body").Element("Log").Value = "1";
-                doc.Save("Config.xml");
-            }
-        }
-
-        private void buttonSM_Click(object sender, EventArgs e)
-        {
-            var message = "Start minimized has been disabled";
-            const string caption = "Success";
-            const MessageBoxButtons buttons = MessageBoxButtons.OK;
-
-            var doc = XDocument.Load("Config.xml");
-
-            if (_startMinimized)
-            {
-                MessageBox.Show(message, caption, buttons);
-                _startMinimized = false;
-                
-                doc.Element("body").Element("LoadMinimized").Value = "0";
-                doc.Save("Config.xml");
-            }
-            else
-            {
-                message = "Start minimized has been enabled";
-                MessageBox.Show(message, caption, buttons);
-                _startMinimized = true;
-
-                doc.Element("body").Element("LoadMinimized").Value = "1";
-                doc.Save("Config.xml");
-            }
         }
 
         private bool Filter_Alerts(string title)
@@ -490,10 +481,7 @@ namespace Warframe_Alerts
 
         public int UpdateInterval
         {
-            get
-            {
-                return _uInterval;
-            }
+            get => _uInterval;
             set
             {
                 _uInterval = value;
@@ -508,5 +496,46 @@ namespace Warframe_Alerts
         public bool ModFilter { get; set; } = true;
 
         public bool BlueprintFilter { get; set; } = true;
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CBLog_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CBLog.Checked)
+            {
+                _enableLog = true;
+                var doc = XDocument.Load("Config.xml");
+                doc.Element("body").Element("Log").Value = "1";
+                doc.Save("Config.xml");
+            }
+            else
+            {
+                _enableLog = false;
+                var doc = XDocument.Load("Config.xml");
+                doc.Element("body").Element("Log").Value = "0";
+                doc.Save("Config.xml");
+            }
+        }
+
+        private void CBStartM_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CBStartM.Checked)
+            {
+                _startMinimized = true;
+                var doc = XDocument.Load("Config.xml");
+                doc.Element("body").Element("LoadMinimized").Value = "1";
+                doc.Save("Config.xml");
+            }
+            else
+            {
+                _startMinimized = false;
+                var doc = XDocument.Load("Config.xml");
+                doc.Element("body").Element("LoadMinimized").Value = "0";
+                doc.Save("Config.xml");
+            }
+        }
     }
 }
