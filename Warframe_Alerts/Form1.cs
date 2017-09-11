@@ -24,6 +24,7 @@ namespace Warframe_Alerts
 
         public MainWindow()
         {
+            
             InitializeComponent();
 
             var skinManager = MaterialSkinManager.Instance;
