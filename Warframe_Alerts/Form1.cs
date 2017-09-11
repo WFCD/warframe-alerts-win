@@ -4,11 +4,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using MaterialSkin;
+using MaterialSkin.Controls;
+using System.Drawing;
 
 namespace Warframe_Alerts
 {
     [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-    public partial class MainWindow : Form
+    public partial class MainWindow : MaterialForm
     {
         private readonly List<string> _idList = new List<string>();
 
@@ -21,13 +24,36 @@ namespace Warframe_Alerts
 
         public MainWindow()
         {
+            
             InitializeComponent();
+
+            var skinManager = MaterialSkinManager.Instance;
+            skinManager.AddFormToManage(this);
+            skinManager.Theme = MaterialSkinManager.Themes.DARK;
+            //skinManager.FORM_PADDING = 0;
+            FormBorderStyle = FormBorderStyle.None;
+            MaximumSize = new Size(1000, 530);
+            MinimumSize = new Size(1000, 530);
+            skinManager.ColorScheme = new ColorScheme(Primary.Teal800, Primary.Teal900, Primary.Teal500, Accent.Teal200, TextShade.WHITE);
+
             Apply_Settings();
             WF_Update();
 
             _updateTimer.Interval = _uInterval;
             _updateTimer.Tick += Update_Click;
             _updateTimer.Start();
+        }
+
+        public sealed override Size MinimumSize
+        {
+            get => base.MinimumSize;
+            set => base.MinimumSize = value;
+        }
+
+        public sealed override Size MaximumSize
+        {
+            get => base.MaximumSize;
+            set => base.MaximumSize = value;
         }
 
         public void Apply_Settings()
@@ -57,8 +83,8 @@ namespace Warframe_Alerts
             if (doc.Element("body").Element("LoadMinimized").Value == "1")
             {
                 _startMinimized = true;
-                buttonSM.Text = @"Disable Start Minimized";
                 FormBorderStyle = FormBorderStyle.SizableToolWindow;
+                MBtnStartM.Text = @"Disable Start Minimized";
                 WindowState = FormWindowState.Minimized;
                 ShowInTaskbar = false;
             }
@@ -66,7 +92,7 @@ namespace Warframe_Alerts
             if (doc.Element("body").Element("Log").Value == "1")
             {
                 _enableLog = true;
-                BtnLog.Text = @"Disable Log";
+                MBtnLog.Text = @"Disable Log";
             }
 
             if (doc.Element("body").Element("Resources").Value == "0")
@@ -153,9 +179,9 @@ namespace Warframe_Alerts
 
             Notify_Alerts_And_Invasions(ref alerts, ref invasions, ref outbreaks);
 
-            AlertData.Rows.Clear();
-            InvasionData.Rows.Clear();
-            _idList.Clear();
+            AlertData.Items.Clear();
+            InvasionData.Items.Clear();
+            _idList.Clear();   
 
             for (var i = 0; i < alerts.Count; i++)
             {
@@ -188,7 +214,9 @@ namespace Warframe_Alerts
                 aLeft = aLeft + aSpan.Seconds + " Seconds Left";
 
                 _idList.Add(aId);
-                AlertData.Rows.Add(description, title, faction, aLeft);
+                string[] row = {description, title, faction, aLeft};
+                var listViewItem = new ListViewItem(row);
+                AlertData.Items.Add(listViewItem);
             }
 
             for (var i = 0; i < invasions.Count; i++)
@@ -210,7 +238,9 @@ namespace Warframe_Alerts
                 time = time + span.Minutes + " Minutes Ago";
 
                 _idList.Add(invId);
-                InvasionData.Rows.Add(title, "Invasion", time);
+                string[] row = {title, "Invasion", time};
+                var listViewItem = new ListViewItem(row);
+                InvasionData.Items.Add(listViewItem);
             }
 
             for (var i = 0; i < outbreaks.Count; i++)
@@ -232,8 +262,15 @@ namespace Warframe_Alerts
                 oTime = oTime + oSpan.Minutes + " Minutes Ago";
 
                 _idList.Add(oId);
-                InvasionData.Rows.Add(title, "Outbreak", oTime);
+                string[] row = {title, "Outbreak", oTime};
+                var listViewItem = new ListViewItem(row);
+                InvasionData.Items.Add(listViewItem);
             }
+
+            AlertData.Scrollable = AlertData.Items.Count != 3;
+            InvasionData.Scrollable = InvasionData.Items.Count != 3;
+            InvasionData.Columns[0].Width = InvasionData.Items.Count > 3 ? 593 : 610;
+            AlertData.Columns[0].Width = AlertData.Items.Count > 3 ? 183 : 200;
         }
 
         public void Log_Alert(string id, string disc)
@@ -368,12 +405,12 @@ namespace Warframe_Alerts
         private void Notification_Icon_Double_Click(object sender, EventArgs e)
         {
             if (WindowState != FormWindowState.Minimized) return;
-            FormBorderStyle = FormBorderStyle.FixedSingle;
             _phaseShift = true;
             ShowInTaskbar = true;
             Opacity = 100;
             Show();
             WindowState = FormWindowState.Normal;
+            FormBorderStyle = FormBorderStyle.None;
             BringToFront();
             _phaseShift = false;
         }
@@ -490,10 +527,7 @@ namespace Warframe_Alerts
 
         public int UpdateInterval
         {
-            get
-            {
-                return _uInterval;
-            }
+            get => _uInterval;
             set
             {
                 _uInterval = value;
@@ -508,5 +542,10 @@ namespace Warframe_Alerts
         public bool ModFilter { get; set; } = true;
 
         public bool BlueprintFilter { get; set; } = true;
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
