@@ -12,8 +12,9 @@ namespace Warframe_Alerts
         private readonly bool _initialM;
         private readonly bool _initialB;
         private readonly bool _initialC;
+        private readonly bool _initialD;
 
-        public SecondaryForm(MainWindow mw, bool resourceFlag, bool modFlag, bool creditFlag, bool blueprintFlag)
+        public SecondaryForm(MainWindow mw, bool resourceFlag, bool modFlag, bool creditFlag, bool blueprintFlag, bool detectionFlag)
         {
             _mainForm = mw;
             InitializeComponent();
@@ -23,6 +24,7 @@ namespace Warframe_Alerts
             _initialM = modFlag;
             _initialC = creditFlag;
             _initialB = blueprintFlag;
+            _initialD = detectionFlag;
 
             _phaseShift = true;
 
@@ -44,6 +46,11 @@ namespace Warframe_Alerts
             if (blueprintFlag)
             {
                 checkBoxBlueprint.Checked = true;
+            }
+
+            if (detectionFlag)
+            {
+                checkBoxDetection.Checked = true;
             }
 
             _phaseShift = false;
@@ -103,12 +110,21 @@ namespace Warframe_Alerts
             }
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void CheckBoxDetection_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!_phaseShift)
+            {
+                _mainForm.GameDetection = checkBoxDetection.Checked;
+            }
+        }
+
+        private void ButtonCancel_Click(object sender, EventArgs e)
         {
             _mainForm.BlueprintFilter = _initialB;
             _mainForm.ResourceFilter = _initialR;
             _mainForm.CreditFilter = _initialC;
             _mainForm.ModFilter = _initialM;
+            _mainForm.GameDetection = _initialD;
 
             Close();
         }

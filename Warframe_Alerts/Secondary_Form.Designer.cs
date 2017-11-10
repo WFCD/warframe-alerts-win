@@ -36,17 +36,17 @@ namespace Warframe_Alerts
             this.textBoxInterval = new System.Windows.Forms.TextBox();
             this.buttonSet = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.FilterLabel = new System.Windows.Forms.Label();
             this.checkBoxMod = new System.Windows.Forms.CheckBox();
             this.checkBoxBlueprint = new System.Windows.Forms.CheckBox();
             this.checkBoxResource = new System.Windows.Forms.CheckBox();
             this.checkBoxCredit = new System.Windows.Forms.CheckBox();
+            this.checkBoxDetection = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 149);
+            this.label1.Location = new System.Drawing.Point(7, 136);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(157, 13);
             this.label1.TabIndex = 0;
@@ -54,14 +54,14 @@ namespace Warframe_Alerts
             // 
             // textBoxInterval
             // 
-            this.textBoxInterval.Location = new System.Drawing.Point(12, 166);
+            this.textBoxInterval.Location = new System.Drawing.Point(11, 152);
             this.textBoxInterval.Name = "textBoxInterval";
             this.textBoxInterval.Size = new System.Drawing.Size(315, 20);
             this.textBoxInterval.TabIndex = 1;
             // 
             // buttonSet
             // 
-            this.buttonSet.Location = new System.Drawing.Point(251, 193);
+            this.buttonSet.Location = new System.Drawing.Point(250, 179);
             this.buttonSet.Name = "buttonSet";
             this.buttonSet.Size = new System.Drawing.Size(75, 23);
             this.buttonSet.TabIndex = 2;
@@ -72,79 +72,81 @@ namespace Warframe_Alerts
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(170, 193);
+            this.buttonCancel.Location = new System.Drawing.Point(169, 179);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 3;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-            // 
-            // FilterLabel
-            // 
-            this.FilterLabel.AutoSize = true;
-            this.FilterLabel.Location = new System.Drawing.Point(13, 13);
-            this.FilterLabel.Name = "FilterLabel";
-            this.FilterLabel.Size = new System.Drawing.Size(34, 13);
-            this.FilterLabel.TabIndex = 4;
-            this.FilterLabel.Text = "Filters";
+            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
             // checkBoxMod
             // 
             this.checkBoxMod.AutoSize = true;
-            this.checkBoxMod.Location = new System.Drawing.Point(16, 39);
+            this.checkBoxMod.Location = new System.Drawing.Point(12, 12);
             this.checkBoxMod.Name = "checkBoxMod";
-            this.checkBoxMod.Size = new System.Drawing.Size(52, 17);
+            this.checkBoxMod.Size = new System.Drawing.Size(106, 17);
             this.checkBoxMod.TabIndex = 5;
-            this.checkBoxMod.Text = "Mods";
+            this.checkBoxMod.Text = "Show Mod Alerts";
             this.checkBoxMod.UseVisualStyleBackColor = true;
             this.checkBoxMod.CheckedChanged += new System.EventHandler(this.CheckBoxMod_Changed);
             // 
             // checkBoxBlueprint
             // 
             this.checkBoxBlueprint.AutoSize = true;
-            this.checkBoxBlueprint.Location = new System.Drawing.Point(16, 63);
+            this.checkBoxBlueprint.Location = new System.Drawing.Point(12, 36);
             this.checkBoxBlueprint.Name = "checkBoxBlueprint";
-            this.checkBoxBlueprint.Size = new System.Drawing.Size(72, 17);
+            this.checkBoxBlueprint.Size = new System.Drawing.Size(126, 17);
             this.checkBoxBlueprint.TabIndex = 6;
-            this.checkBoxBlueprint.Text = "Blueprints";
+            this.checkBoxBlueprint.Text = "Show Blueprint Alerts";
             this.checkBoxBlueprint.UseVisualStyleBackColor = true;
             this.checkBoxBlueprint.CheckedChanged += new System.EventHandler(this.CheckBoxBlueprint_Changed);
             // 
             // checkBoxResource
             // 
             this.checkBoxResource.AutoSize = true;
-            this.checkBoxResource.Location = new System.Drawing.Point(16, 87);
+            this.checkBoxResource.Location = new System.Drawing.Point(12, 60);
             this.checkBoxResource.Name = "checkBoxResource";
-            this.checkBoxResource.Size = new System.Drawing.Size(77, 17);
+            this.checkBoxResource.Size = new System.Drawing.Size(136, 17);
             this.checkBoxResource.TabIndex = 7;
-            this.checkBoxResource.Text = "Resources";
+            this.checkBoxResource.Text = "Show Resources Alerts";
             this.checkBoxResource.UseVisualStyleBackColor = true;
             this.checkBoxResource.CheckedChanged += new System.EventHandler(this.CheckBoxResource_Changed);
             // 
             // checkBoxCredit
             // 
             this.checkBoxCredit.AutoSize = true;
-            this.checkBoxCredit.Location = new System.Drawing.Point(16, 111);
+            this.checkBoxCredit.Location = new System.Drawing.Point(12, 84);
             this.checkBoxCredit.Name = "checkBoxCredit";
-            this.checkBoxCredit.Size = new System.Drawing.Size(58, 17);
+            this.checkBoxCredit.Size = new System.Drawing.Size(117, 17);
             this.checkBoxCredit.TabIndex = 8;
-            this.checkBoxCredit.Text = "Credits";
+            this.checkBoxCredit.Text = "Show Credits Alerts";
             this.checkBoxCredit.UseVisualStyleBackColor = true;
             this.checkBoxCredit.CheckedChanged += new System.EventHandler(this.CheckBoxCredit_Changed);
+            // 
+            // checkBoxDetection
+            // 
+            this.checkBoxDetection.AutoSize = true;
+            this.checkBoxDetection.Location = new System.Drawing.Point(12, 107);
+            this.checkBoxDetection.Name = "checkBoxDetection";
+            this.checkBoxDetection.Size = new System.Drawing.Size(239, 17);
+            this.checkBoxDetection.TabIndex = 9;
+            this.checkBoxDetection.Text = "Pause notifications while Warframe is running";
+            this.checkBoxDetection.UseVisualStyleBackColor = true;
+            this.checkBoxDetection.CheckedChanged += new System.EventHandler(this.CheckBoxDetection_CheckedChanged);
             // 
             // SecondaryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(338, 221);
+            this.ClientSize = new System.Drawing.Size(338, 213);
             this.ControlBox = false;
+            this.Controls.Add(this.checkBoxDetection);
             this.Controls.Add(this.checkBoxCredit);
             this.Controls.Add(this.checkBoxResource);
             this.Controls.Add(this.checkBoxBlueprint);
             this.Controls.Add(this.checkBoxMod);
-            this.Controls.Add(this.FilterLabel);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonSet);
             this.Controls.Add(this.textBoxInterval);
@@ -164,10 +166,10 @@ namespace Warframe_Alerts
         private TextBox textBoxInterval;
         private Button buttonSet;
         private Button buttonCancel;
-        private Label FilterLabel;
         private CheckBox checkBoxMod;
         private CheckBox checkBoxBlueprint;
         private CheckBox checkBoxResource;
         private CheckBox checkBoxCredit;
+        private CheckBox checkBoxDetection;
     }
 }

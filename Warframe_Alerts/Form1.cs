@@ -7,6 +7,7 @@ using System.Xml.Linq;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace Warframe_Alerts
 {
@@ -142,7 +143,7 @@ namespace Warframe_Alerts
 
         private void Setting_Click(object sender, EventArgs e)
         {
-            var sf = new SecondaryForm(this,ResourceFilter,ModFilter,CreditFilter,BlueprintFilter);
+            var sf = new SecondaryForm(this, ResourceFilter, ModFilter, CreditFilter, BlueprintFilter, GameDetection);
             sf.ShowDialog();
         }
 
@@ -189,7 +190,17 @@ namespace Warframe_Alerts
 
             wf.GetObjects(response, ref alerts, ref invasions, ref outbreaks);
 
-            Notify_Alerts_And_Invasions(ref alerts, ref invasions, ref outbreaks);
+            if (GameDetection)
+            {
+                if (!DetectWarframe())
+                {
+                    Notify_Alerts_And_Invasions(ref alerts, ref invasions, ref outbreaks);
+                }
+            }
+            else
+            {
+                Notify_Alerts_And_Invasions(ref alerts, ref invasions, ref outbreaks);
+            }
 
             Invoke(new Action(() =>
             {
@@ -504,6 +515,23 @@ namespace Warframe_Alerts
             if (title.IndexOf("Nitain", StringComparison.Ordinal) == -1)
             {
                 flag = false;
+            }
+
+            return flag;
+        }
+
+        private static bool DetectWarframe()
+        {
+            var flag = false;
+            var processlist = Process.GetProcesses();
+
+            foreach (var process in processlist)
+            {
+                if (string.IsNullOrEmpty(process.MainWindowTitle)) continue;
+                if (process.ProcessName == "Warframe.x64" || process.ProcessName == "Warframe")
+                {
+                    flag = true;
+                }
             }
 
             return flag;
