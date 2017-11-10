@@ -7,7 +7,6 @@ using System.Xml.Linq;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using System.Drawing;
-using System.Threading.Tasks;
 
 namespace Warframe_Alerts
 {
@@ -38,7 +37,9 @@ namespace Warframe_Alerts
             skinManager.ColorScheme = new ColorScheme(Primary.Teal800, Primary.Teal900, Primary.Teal500, Accent.Teal200, TextShade.WHITE);
 
             Apply_Settings();
-            new Task(WF_Update).Start();
+
+            Action update = WF_Update;
+            update.BeginInvoke(ar => update.EndInvoke(ar), null);
 
             _updateTimer.Interval = _uInterval;
             _updateTimer.Tick += Update_Click;
@@ -70,7 +71,8 @@ namespace Warframe_Alerts
                         new XElement("Credits", "1"),
                         new XElement("Blueprints", "1"),
                         new XElement("Log", "0"),
-                        new XElement("UpdateTimer", _uInterval.ToString())
+                        new XElement("UpdateTimer", _uInterval.ToString()),
+                        new XElement("GameDetection", "1")
 
                     )
                 );
@@ -118,14 +120,19 @@ namespace Warframe_Alerts
                 CreditFilter = false;
             }
 
-            var uInt = doc.Element("body").Element("UpdateTimer").Value;
+            if (doc.Element("body").Element("GameDetection").Value == "0")
+            {
+                GameDetection = false;
+            }
 
+            var uInt = doc.Element("body").Element("UpdateTimer").Value;
             _uInterval = Convert.ToInt32(uInt);
         }
 
         private void Update_Click(object sender, EventArgs e)
         {
-            new Task(WF_Update).Start();
+            Action update = WF_Update;
+            update.BeginInvoke(ar => update.EndInvoke(ar), null);
         }
 
         private void Exit_Click(object sender, EventArgs e)
@@ -150,6 +157,8 @@ namespace Warframe_Alerts
             doc.Element("body").Element("Mods").Value = ModFilter ? "1" : "0";
 
             doc.Element("body").Element("Blueprints").Value = BlueprintFilter ? "1" : "0";
+
+            doc.Element("body").Element("GameDetection").Value = GameDetection ? "1" : "0";
 
             doc.Element("body").Element("UpdateTimer").Value = _uInterval.ToString();
 
@@ -182,9 +191,16 @@ namespace Warframe_Alerts
 
             Notify_Alerts_And_Invasions(ref alerts, ref invasions, ref outbreaks);
 
-            AlertData.Items.Clear();
-            InvasionData.Items.Clear();
-            _idList.Clear();   
+            Invoke(new Action(() =>
+            {
+                AlertData.Items.Clear();
+                InvasionData.Items.Clear();
+                _idList.Clear();
+            }));
+
+            //AlertData.Items.Clear();
+            //InvasionData.Items.Clear();
+            //_idList.Clear();   
 
             for (var i = 0; i < alerts.Count; i++)
             {
@@ -228,7 +244,8 @@ namespace Warframe_Alerts
                 _idList.Add(aId);
                 string[] row = {description, title, faction, aLeft};
                 var listViewItem = new ListViewItem(row);
-                AlertData.Items.Add(listViewItem);
+                //AlertData.Items.Add(listViewItem);
+                Invoke(new Action(() => AlertData.Items.Add(listViewItem)));
             }
 
             for (var i = 0; i < invasions.Count; i++)
@@ -252,7 +269,8 @@ namespace Warframe_Alerts
                 _idList.Add(invId);
                 string[] row = {title, "Invasion", time};
                 var listViewItem = new ListViewItem(row);
-                InvasionData.Items.Add(listViewItem);
+                //InvasionData.Items.Add(listViewItem);
+                Invoke(new Action(() => InvasionData.Items.Add(listViewItem)));
             }
 
             for (var i = 0; i < outbreaks.Count; i++)
@@ -276,13 +294,23 @@ namespace Warframe_Alerts
                 _idList.Add(oId);
                 string[] row = {title, "Outbreak", oTime};
                 var listViewItem = new ListViewItem(row);
-                InvasionData.Items.Add(listViewItem);
+                //InvasionData.Items.Add(listViewItem);
+                Invoke(new Action(() => InvasionData.Items.Add(listViewItem)));
             }
 
-            AlertData.Scrollable = AlertData.Items.Count != 3;
-            InvasionData.Scrollable = InvasionData.Items.Count != 3;
-            InvasionData.Columns[0].Width = InvasionData.Items.Count > 3 ? 627 : 644;
-            AlertData.Columns[3].Width = AlertData.Items.Count > 3 ? 235 : 252;
+            //AlertData.Scrollable = AlertData.Items.Count != 3;
+            //InvasionData.Scrollable = InvasionData.Items.Count != 3;
+
+            Invoke(new Action(() =>
+            {
+                AlertData.Scrollable = AlertData.Items.Count != 3;
+                InvasionData.Scrollable = InvasionData.Items.Count != 3;
+                InvasionData.Columns[0].Width = InvasionData.Items.Count > 3 ? 627 : 644;
+                AlertData.Columns[3].Width = AlertData.Items.Count > 3 ? 235 : 252;
+            }));
+
+            //InvasionData.Columns[0].Width = InvasionData.Items.Count > 3 ? 627 : 644;
+            //AlertData.Columns[3].Width = AlertData.Items.Count > 3 ? 235 : 252;
         }
 
         public void Log_Alert(string id, string disc)
@@ -498,6 +526,8 @@ namespace Warframe_Alerts
         public bool ModFilter { get; set; } = true;
 
         public bool BlueprintFilter { get; set; } = true;
+
+        public bool GameDetection { get; set; } = true;
 
         private void MainWindow_Load(object sender, EventArgs e)
         {

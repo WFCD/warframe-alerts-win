@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Warframe_Alerts
@@ -54,9 +53,7 @@ namespace Warframe_Alerts
         {
             var input = textBoxInterval.Text;
 
-            int inputToInt;
-
-            if (!Int32.TryParse(input, out inputToInt))
+            if (!Int32.TryParse(input, out var inputToInt))
             {
                 var message = "Please insert a valid input";
                 var caption = "Invalid Input";
@@ -67,7 +64,9 @@ namespace Warframe_Alerts
             _mainForm.UpdateInterval = inputToInt * 60 * 1000;
 
             _mainForm.Update_Settings_XML();
-            new Task(_mainForm.WF_Update).Start();
+            
+            Action update = _mainForm.WF_Update;
+            update.BeginInvoke(ar => update.EndInvoke(ar), null);
 
             Close();
         }

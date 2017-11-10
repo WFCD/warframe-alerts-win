@@ -31,7 +31,7 @@ namespace Warframe_Alerts
         /// </summary>
         private void InitializeComponent()
         {
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(SecondaryForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SecondaryForm));
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxInterval = new System.Windows.Forms.TextBox();
             this.buttonSet = new System.Windows.Forms.Button();
@@ -133,7 +133,7 @@ namespace Warframe_Alerts
             this.checkBoxCredit.UseVisualStyleBackColor = true;
             this.checkBoxCredit.CheckedChanged += new System.EventHandler(this.CheckBoxCredit_Changed);
             // 
-            // Secondary_Form
+            // SecondaryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
