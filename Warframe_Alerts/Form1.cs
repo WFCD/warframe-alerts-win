@@ -7,6 +7,7 @@ using System.Xml.Linq;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace Warframe_Alerts
 {
@@ -37,7 +38,7 @@ namespace Warframe_Alerts
             skinManager.ColorScheme = new ColorScheme(Primary.Teal800, Primary.Teal900, Primary.Teal500, Accent.Teal200, TextShade.WHITE);
 
             Apply_Settings();
-            WF_Update();
+            new Task(WF_Update).Start();
 
             _updateTimer.Interval = _uInterval;
             _updateTimer.Tick += Update_Click;
@@ -124,7 +125,7 @@ namespace Warframe_Alerts
 
         private void Update_Click(object sender, EventArgs e)
         {
-            WF_Update();
+            new Task(WF_Update).Start();
         }
 
         private void Exit_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Warframe_Alerts
@@ -66,7 +67,7 @@ namespace Warframe_Alerts
             _mainForm.UpdateInterval = inputToInt * 60 * 1000;
 
             _mainForm.Update_Settings_XML();
-            _mainForm.WF_Update();
+            new Task(_mainForm.WF_Update).Start();
 
             Close();
         }
