@@ -35,7 +35,7 @@ namespace Warframe_Alerts
             FormBorderStyle = FormBorderStyle.None;
             MaximumSize = new Size(1020, 530);
             MinimumSize = new Size(1020, 530);
-            skinManager.ColorScheme = new ColorScheme(Primary.Teal800, Primary.Teal900, Primary.Teal500, Accent.Teal200, TextShade.WHITE);
+            skinManager.ColorScheme = new ColorScheme((Primary)0x01C2F8, (Primary)0x039AC5, (Primary)0x4CD6FD, (Accent)0x039AC5, TextShade.WHITE);
 
             Apply_Settings();
 
