@@ -220,11 +220,11 @@ namespace Warframe_Alerts
                 var title = alerts[i].Title;
                 var titleSp = title.Split('-');
 
-                title = titleSp[0];
+                var tempTitle = titleSp[0];
 
                 for (var j = 1; j < titleSp.Length - 1; j++)
                 {
-                    title = title + "-" + titleSp[j];
+                    tempTitle = tempTitle + "-" + titleSp[j];
                 }
 
                 var description = alerts[i].Description;
@@ -253,7 +253,7 @@ namespace Warframe_Alerts
                 aLeft = aLeft + aSpan.Seconds + " Seconds Left";
 
                 _idList.Add(aId);
-                string[] row = {description, title, faction, aLeft};
+                string[] row = {description, tempTitle, faction, aLeft};
                 var listViewItem = new ListViewItem(row);
                 //AlertData.Items.Add(listViewItem);
                 Invoke(new Action(() => AlertData.Items.Add(listViewItem)));
@@ -472,22 +472,27 @@ namespace Warframe_Alerts
 
             if (!BlueprintFilter)
             {
-                if (title.IndexOf("(Blueprint)", StringComparison.Ordinal) != -1)
+                if (title.IndexOf("(Blueprint)", StringComparison.Ordinal) != -1 &&
+                    title.IndexOf("Catalyst", StringComparison.Ordinal) == -1 &&
+                    title.IndexOf("Reactor", StringComparison.Ordinal) == -1)
                 {
                     flag = false;
                 }
             }
 
-            var dashCount = 0;
-
             if (!CreditFilter)
             {
+                var dashCount = 0;
+                var previous = 'X';
+
                 foreach (var t in title)
                 {
-                    if (t == '-')
+                    if (t == '-' && previous == ' ')
                     {
                         dashCount++;
                     }
+
+                    previous = t;
                 }
 
                 if (dashCount == 2)
@@ -503,7 +508,8 @@ namespace Warframe_Alerts
 
             if (!ModFilter)
             {
-                if (title.IndexOf("(Mod)", StringComparison.Ordinal) != -1)
+                if (title.IndexOf("(Mod)", StringComparison.Ordinal) != -1 &&
+                    title.IndexOf("Riven", StringComparison.Ordinal) == -1)
                 {
                     flag = false;
                 }

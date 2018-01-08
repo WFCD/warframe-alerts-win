@@ -41,12 +41,13 @@ namespace Warframe_Alerts
             this.checkBoxResource = new System.Windows.Forms.CheckBox();
             this.checkBoxCredit = new System.Windows.Forms.CheckBox();
             this.checkBoxDetection = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 136);
+            this.label1.Location = new System.Drawing.Point(9, 158);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(157, 13);
             this.label1.TabIndex = 0;
@@ -54,14 +55,14 @@ namespace Warframe_Alerts
             // 
             // textBoxInterval
             // 
-            this.textBoxInterval.Location = new System.Drawing.Point(11, 152);
+            this.textBoxInterval.Location = new System.Drawing.Point(13, 174);
             this.textBoxInterval.Name = "textBoxInterval";
-            this.textBoxInterval.Size = new System.Drawing.Size(315, 20);
+            this.textBoxInterval.Size = new System.Drawing.Size(532, 20);
             this.textBoxInterval.TabIndex = 1;
             // 
             // buttonSet
             // 
-            this.buttonSet.Location = new System.Drawing.Point(250, 179);
+            this.buttonSet.Location = new System.Drawing.Point(470, 200);
             this.buttonSet.Name = "buttonSet";
             this.buttonSet.Size = new System.Drawing.Size(75, 23);
             this.buttonSet.TabIndex = 2;
@@ -72,7 +73,7 @@ namespace Warframe_Alerts
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(169, 179);
+            this.buttonCancel.Location = new System.Drawing.Point(389, 200);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 3;
@@ -135,13 +136,24 @@ namespace Warframe_Alerts
             this.checkBoxDetection.UseVisualStyleBackColor = true;
             this.checkBoxDetection.CheckedChanged += new System.EventHandler(this.CheckBoxDetection_CheckedChanged);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 136);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(500, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Note: Rivens, Catalysts, Reactors and Nitain are considered high priority alerts " +
+    "and thus are never filtered";
+            // 
             // SecondaryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(338, 213);
+            this.ClientSize = new System.Drawing.Size(557, 232);
             this.ControlBox = false;
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.checkBoxDetection);
             this.Controls.Add(this.checkBoxCredit);
             this.Controls.Add(this.checkBoxResource);
@@ -171,5 +183,6 @@ namespace Warframe_Alerts
         private CheckBox checkBoxResource;
         private CheckBox checkBoxCredit;
         private CheckBox checkBoxDetection;
+        private Label label2;
     }
 }
